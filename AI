@@ -1,4 +1,3 @@
-//THIS DOES NOT HAVE A CONSTRUCTOR AS IT IS NOT AN OBJECT ITSELF and yes, I'm not using an API cause I'm too dumb and don't know how
 class AI extends player {
   //CONSTRUCTOR START
   AI(float startingX, float startingY, color Color) {
