@@ -1,0 +1,16 @@
+//1. The AI constructor is used for the AI to control the player. This means that the key inputs (ie; UPkey) are not needed in the constructor, hence a different
+//constructor is being used
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
