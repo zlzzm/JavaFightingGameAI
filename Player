@@ -1,0 +1,69 @@
+class player {
+  
+  float x, y; //the x and y positions
+  color c; //the color
+  int health = 100; //the health
+  boolean boolUPkey, boolDOWNkey, boolLEFTkey, boolRIGHTkey, boolLIGHT, boolHEAVY, boolBLOCK; //just the bools for the WASD, shoot, and block keys
+  char UPkey, DOWNkey, LEFTkey, RIGHTkey, LIGHTkey, HEAVYkey, BLOCKkey; //the actual keys
+  boolean facingLeft;
+  boolean lightAttack;
+
+  //the animation checkers for the player:
+  boolean aniLIGHT = false;
+  boolean aniHEAVY = false;
+
+  //CONSTRUCTOR START
+  player(int startingX, int startingY, color Color, char setUPkey, char setLEFTkey, char setDOWNkey, char setRIGHTkey, char setLIGHT, char setHEAVY, char setBLOCK) {
+    x = startingX;
+    y = startingY;
+    c = Color;
+    UPkey = setUPkey;
+    DOWNkey = setDOWNkey;
+    LEFTkey = setLEFTkey;
+    RIGHTkey = setRIGHTkey;
+    LIGHTkey = setLIGHT;
+    HEAVYkey = setHEAVY;
+    BLOCKkey = setBLOCK;
+  }
+  //CONSTRUCTOR END
+
+  //AI CONSTRUCTOR START - item 1 in definitions
+  player(float startingX, float startingY, color Color) {
+    x = startingX;
+    y = startingY;
+    c = Color;
+  }
+  //AI CONSTRUCTOR END
+
+  void show() { //the actual show thing
+    fill(c);
+    rect(x, y, 100, 100);
+    if (boolLEFTkey) facingLeft = true;
+    if (boolRIGHTkey) facingLeft = false;
+    textSize(80);
+    text(health, x, y);
+  }
+  void updateMovement() { //just the functions to actually update the movement
+    if (boolUPkey) {
+      y -= 5;
+    }
+    if (boolDOWNkey) {
+      y += 5;
+    }
+    if (boolLEFTkey) {
+      x -= 5;
+    }
+    if (boolRIGHTkey) {
+      x += 5;
+    }
+  }
+  void setDirection(char key1, boolean state) {
+    if (key1 == UPkey) boolUPkey = state;
+    else if (key1 == DOWNkey) boolDOWNkey = state;
+    else if (key1 == LEFTkey) boolLEFTkey = state;
+    else if (key1 == RIGHTkey) boolRIGHTkey = state;
+    else if (key1 == LIGHTkey) boolLIGHT = state;
+    else if (key1 == HEAVYkey) boolHEAVY = state;
+    else if (key1 == BLOCKkey) boolBLOCK = state;
+  }
+}
