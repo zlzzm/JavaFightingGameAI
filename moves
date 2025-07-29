@@ -1,0 +1,26 @@
+lightAttackAnimation lAni; //the light attack animation class
+heavyAttackAnimation hAni; //the heavy attack animation class
+blockAnimation  bAni; //the block animation class
+
+void updateMoves()
+{
+  if (p1.boolLIGHT) light(p1, p2);
+  if (p2.boolLIGHT) light(p2, p1);
+  if (p1.boolHEAVY) heavy(p1, p2);
+  if (p2.boolHEAVY) heavy(p1, p2);
+  if (p1.boolBLOCK) block(p1);
+  if (p2.boolBLOCK) block(p2);
+}
+void light(player attacker, player reciever) {
+  lAni.show(attacker);
+  attacker.aniLIGHT = true;
+  if (((abs(attacker.x - reciever.x) < 139) && (!reciever.boolBLOCK)) && (attacker.y >= reciever.y) && (attacker.y >= reciever.y + 100)) reciever.health -= 5;
+}
+void heavy(player attacker, player reciever) {
+  hAni.show(attacker.x, attacker.y, attacker);
+  attacker.aniHEAVY = true;
+  if (((abs(attacker.x - reciever.x) < 139) && (!reciever.boolBLOCK)) && (attacker.y >= reciever.y) && (attacker.y >= reciever.y + 100)) reciever.health -= 10;
+}
+void block(player blocker) {
+  bAni.show(blocker);
+}
