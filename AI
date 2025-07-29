@@ -1,0 +1,22 @@
+//THIS DOES NOT HAVE A CONSTRUCTOR AS IT IS NOT AN OBJECT ITSELF and yes, I'm not using an API cause I'm too dumb and don't know how
+class AI extends player {
+  //CONSTRUCTOR START
+  AI(float startingX, float startingY, color Color) {
+    super(startingX, startingY, Color);
+  }
+  //CONTRUCTOR END
+  
+  //since this is just used to control the second player if being used, this is including it
+  player p2;
+  //this is to get the player position and stuff like that for the AI to use
+  void getPlayerDirection(int player) {
+    if (player == 1) {
+      p1.x = playerX;
+      p1.y = playerY;
+    } else if (player == 2) {
+      p2.x = playerX;
+      p2.y = playerY;
+    }
+  }
+  //now we're going to set the entire AI stuff up here
+}
