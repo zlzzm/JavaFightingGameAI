@@ -1,0 +1,14 @@
+How do add another custom move:
+1. Go to the moves tab
+2. Make a void() function named that move
+3. Program your function on the damage it should do and the range of it (see the actual other functions as an example)
+4. Go to the AttackAnimations tab
+5. Create a class called whatever you named your animation
+6. Type this exactly:
+      void show(player player) {
+   }
+7. Add the actual animation in the square braces
+8. Go to the Player tab
+9. Go to the Player constructor (DO NOT GO TO THE AI CONSTRUCTOR)
+10. Click on the last peramiter. Add char setCustomMove at the end. Ie: player(char setCustomMove) {}
+11. 
