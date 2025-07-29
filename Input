@@ -1,0 +1,14 @@
+char keyPress;
+int cooldown;
+//the key pressed checks
+void keyPressed() {
+  keyPress = Character.toUpperCase(key); //just a fancy way of saying take the key and capitalize it
+  p1.setDirection(keyPress, true);
+  p2.setDirection(keyPress, true);
+}
+//the key released checks
+void keyReleased() {
+  keyPress = Character.toUpperCase(key);
+  p1.setDirection(keyPress, false);
+  p2.setDirection(keyPress, false);
+}
