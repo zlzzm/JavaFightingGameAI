@@ -1,14 +1,23 @@
 char keyPress;
-int cooldown;
+
 //the key pressed checks
 void keyPressed() {
-  keyPress = Character.toUpperCase(key); //just a fancy way of saying take the key and capitalize it
-  p1.setDirection(keyPress, true);
-  p2.setDirection(keyPress, true);
+  keyPress = Character.toUpperCase(key); //fancy way of uppercasing the character
+  if (p1 != null) p1.setDirection(keyPress, true);
 }
+
 //the key released checks
 void keyReleased() {
-  keyPress = Character.toUpperCase(key);
-  p1.setDirection(keyPress, false);
-  p2.setDirection(keyPress, false);
+  keyPress = Character.toUpperCase(key); //fancy way of uppercasing the character
+
+  if (p1 != null) {
+    p1.setDirection(keyPress, false);
+
+    if (p1.LIGHTkey != 0 && keyPress == p1.LIGHTkey) {
+      p1.lightOnCooldown = false;
+    }
+    if (p1.HEAVYkey != 0 && keyPress == p1.HEAVYkey) {
+      p1.heavyOnCooldown = false;
+    }
+  }
 }
