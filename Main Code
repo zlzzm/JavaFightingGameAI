@@ -1,32 +1,46 @@
 //setting up the classes (p1, p2)
-player p1, p2;
-
+player p1;
+lightAttackAnimation lAni;
+heavyAttackAnimation hAni;
+blockAnimation bAni;
+AI ai;
 //variables
 float playerX, playerY;
 boolean AI = true;
 
 //setup
 void setup() {
-  size(1500, 1000);
+  size(1000, 800);
   background(0);
-  p1 = new player(300, 900, #0502EA, 'W', 'A', 'S', 'D', 'F', 'G', 'E');
-  p2 = new AI(800, 900, #FF0324);
   lAni = new lightAttackAnimation();
   hAni = new heavyAttackAnimation();
   bAni = new blockAnimation();
+  p1 = new player(300, height - 100, #0502EA, 'W', 'A', 'S', 'D', 'F', 'G', 'E', lAni, hAni, bAni);
+  ai = new AI(800, height - 300, #FF0324, lAni, hAni, bAni);
 }
 
 //loop
 void draw() {
   background(0);
-  p1.show();
-  p2.show();
   p1.updateMovement();
-  p2.updateMovement();
-  updateMoves();
+  ai.updateMovement();
   p1.x = constrain(p1.x, 0, width - 100);
   p1.y = constrain(p1.y, 0, height - 100);
-  p2.x = constrain(p2.x, 0, width - 100);
-  p2.y = constrain(p2.y, 0, height - 100);
-  if ((p1.health == 0) || (p2.health == 0)) exit();
+  ai.x = constrain(ai.x, 0, width - 100);
+  ai.y = constrain(ai.y, 0, height - 100);
+  p1.handleAttacks(p1, ai);
+  ai.handleAttacks(ai, p1);
+  p1.show();
+  ai.show();
+  ai.moveLogic();
+  if ((p1.health == 0) || (ai.health == 0)) exit();
+  textSize(10);
+  fill(255);
+  text("LIGHTkey: " + p1.LIGHTkey, 10, 20);
+  text("HEAVYkey: " + p1.HEAVYkey, 10, 30);
+  text("BLOCKkey: " + p1.BLOCKkey, 10, 40);
+  text("UPkey: " + p1.UPkey, 10, 50);
+  text("DOWNkey: " + p1.DOWNkey, 10, 60);
+  text("LEFTkey: " + p1.LEFTkey, 10, 70);
+  text("RIGHTkey: " + p1.RIGHTkey, 10, 80);
 }
