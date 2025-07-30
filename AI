@@ -1,21 +1,54 @@
 class AI extends player {
+  moves moveSet; //includes the moveset for the AI
+  
+  float playerX, playerY;
+  int speed = 5;
+  
+  
   //CONSTRUCTOR START
-  AI(float startingX, float startingY, color Color) {
+  AI(float startingX, float startingY, color Color, lightAttackAnimation l, heavyAttackAnimation h, blockAnimation b) {
     super(startingX, startingY, Color);
+    moveSet = new moves(l, h, b);
   }
   //CONTRUCTOR END
-  
-  //since this is just used to control the second player if being used, this is including it
-  player p2;
+
   //this is to get the player position and stuff like that for the AI to use
-  void getPlayerDirection(int player) {
-    if (player == 1) {
-      p1.x = playerX;
-      p1.y = playerY;
-    } else if (player == 2) {
-      p2.x = playerX;
-      p2.y = playerY;
-    }
+  void getPlayerXY() {
+    playerX = p1.x;
+    playerY = p1.y;
   }
-  //now we're going to set the entire AI stuff up here
+
+  //programming the AI's core attack and defend moves
+  void block() {
+    moveSet.block(this);
+  }
+  void lightAttack() {
+    moveSet.light(this, p1);
+  }
+  void heavyAttack() {
+    moveSet.heavy(this, p1);
+  }
+  
+  //programming AI's actual ability to move around
+  void moveUp() {
+    this.y -= speed;
+  }
+  void moveDown() {
+    this.y += speed;
+  }
+  void moveLeft() {
+    this.x -= speed;
+  }
+  void moveRight() {
+    this.x += speed;
+  }
+  
+  //move logic
+  void moveLogic() {
+    getPlayerXY();
+    if (playerY < this.y - 110) moveUp();
+    if (playerY > this.y + 110) moveDown();
+    if (playerX < this.x + 110) moveLeft();
+    if (playerX > this.x - 110) moveRight();
+  }
 }
