@@ -1,5 +1,7 @@
 class player {
-  
+  moves moves;
+  AI ai;
+
   float x, y; //the x and y positions
   color c; //the color
   int health = 100; //the health
@@ -7,13 +9,27 @@ class player {
   char UPkey, DOWNkey, LEFTkey, RIGHTkey, LIGHTkey, HEAVYkey, BLOCKkey; //the actual keys
   boolean facingLeft;
   boolean lightAttack;
+  int pSpeed = 6; //the player speed
 
   //the animation checkers for the player:
   boolean aniLIGHT = false;
   boolean aniHEAVY = false;
 
+  //the cooldowns
+  int lightCooldown = 50;
+  int heavyCooldown = 50;
+  int lightCooldownDuration = 500;
+  int heavyCooldownDuration = 1500;
+  boolean lightOnCooldown = false;
+  boolean heavyOnCooldown = false;
+
+  //the blocks
+  int blockStartTime = 0;
+  int blockDuration = 1000; // ms of active block
+  boolean isBlocking = false;
+
   //CONSTRUCTOR START
-  player(int startingX, int startingY, color Color, char setUPkey, char setLEFTkey, char setDOWNkey, char setRIGHTkey, char setLIGHT, char setHEAVY, char setBLOCK) {
+  player(int startingX, int startingY, color Color, char setUPkey, char setLEFTkey, char setDOWNkey, char setRIGHTkey, char setLIGHT, char setHEAVY, char setBLOCK, lightAttackAnimation l, heavyAttackAnimation h, blockAnimation b) {
     x = startingX;
     y = startingY;
     c = Color;
@@ -24,6 +40,7 @@ class player {
     LIGHTkey = setLIGHT;
     HEAVYkey = setHEAVY;
     BLOCKkey = setBLOCK;
+    moves = new moves(l, h, b);
   }
   //CONSTRUCTOR END
 
@@ -45,16 +62,16 @@ class player {
   }
   void updateMovement() { //just the functions to actually update the movement
     if (boolUPkey) {
-      y -= 5;
+      y -= pSpeed;
     }
     if (boolDOWNkey) {
-      y += 5;
+      y += pSpeed;
     }
     if (boolLEFTkey) {
-      x -= 5;
+      x -= pSpeed;
     }
     if (boolRIGHTkey) {
-      x += 5;
+      x += pSpeed;
     }
   }
   void setDirection(char key1, boolean state) {
@@ -65,5 +82,30 @@ class player {
     else if (key1 == LIGHTkey) boolLIGHT = state;
     else if (key1 == HEAVYkey) boolHEAVY = state;
     else if (key1 == BLOCKkey) boolBLOCK = state;
+  }
+  void handleAttacks(player attacker, player reciever) {
+    if (boolLIGHT && !lightOnCooldown) {
+      if (millis() - lightCooldown >= lightCooldownDuration) {
+        println("LIGHT ATTACK!");
+        lightCooldown = millis();
+        moves.light(attacker, reciever);
+        lightOnCooldown = true;
+      }
+    }
+
+    if (boolHEAVY && !heavyOnCooldown) {
+      if (millis() - heavyCooldown >= heavyCooldownDuration) {
+        println("HEAVY ATTACK!");
+        heavyCooldown = millis();
+        moves.heavy(attacker, reciever);
+        heavyOnCooldown = true;
+      }
+    }
+    if (millis() - blockStartTime > blockDuration) {
+      isBlocking = false;
+    }
+    if (boolBLOCK) {
+      moves.block(this); // activate block
+    }
   }
 }
